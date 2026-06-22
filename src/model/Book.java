@@ -1,5 +1,9 @@
 package model;
 
+import exception.InvalidDataException;
+
+import java.time.LocalDateTime;
+
 public class Book extends Item {
     private String author;
     private int pageCount;
@@ -7,6 +11,11 @@ public class Book extends Item {
 
     public Book(String title, int yearPublished, String publisher, String author, int pageCount, String isbn) {
         super(title, yearPublished, publisher);
+
+        if (pageCount <= 0) {
+            throw new InvalidDataException("Количество страниц должно быть больше 0");
+        }
+
         this.author = author;
         this.pageCount = pageCount;
         this.isbn = isbn;
@@ -15,6 +24,19 @@ public class Book extends Item {
     @Override
     public String getDescription() {
         return "Книга: " + getTitle() + ", автор: " + author;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + getId() +
+                ", title='" + getTitle() + '\'' +
+                ", yearPublished=" + getYearPublished() +
+                ", publisher='" + getPublisher() + '\'' +
+                ", author='" + author + '\'' +
+                ", pageCount=" + pageCount +
+                ", isbn='" + isbn + '\'' +
+                '}';
     }
 }
 

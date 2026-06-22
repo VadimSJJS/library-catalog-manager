@@ -1,6 +1,10 @@
 
 package model;
 
+import exception.InvalidDataException;
+
+import java.time.LocalDateTime;
+
 public abstract class Item {
     private long id;
     private String title;
@@ -10,6 +14,10 @@ public abstract class Item {
     public abstract String getDescription();
 
     public Item(String title, int yearPublished, String publisher) {
+        if (yearPublished < 0 || yearPublished > LocalDateTime.now().getYear()) {
+            throw new InvalidDataException("Год издания не может быть < 0 или быть больше текущего года");
+        }
+
         this.title = title;
         this.yearPublished = yearPublished;
         this.publisher = publisher;
@@ -45,5 +53,15 @@ public abstract class Item {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", yearPublished=" + yearPublished +
+                ", publisher='" + publisher + '\'' +
+                '}';
     }
 }
