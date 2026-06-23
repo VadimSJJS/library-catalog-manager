@@ -2,8 +2,6 @@ package model;
 
 import exception.InvalidDataException;
 
-import java.time.LocalDateTime;
-
 public class Book extends Item {
     private String author;
     private int pageCount;
@@ -38,5 +36,28 @@ public class Book extends Item {
                 ", isbn='" + isbn + '\'' +
                 '}';
     }
-}
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+}

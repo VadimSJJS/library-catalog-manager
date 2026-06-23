@@ -4,7 +4,6 @@ import model.Item;
 import model.Magazine;
 import service.LibraryCatalog;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -38,8 +37,11 @@ public class Main {
         System.out.println(items);
 
         libraryCatalog.removeItem(2);
-        List<Item> items2 =  libraryCatalog.getAllItems();
+        List<Item> items2 = libraryCatalog.getAllItems();
 
         System.out.println(items2);
+
+        System.out.println(magazine instanceof Book);
+        System.out.println(book2 instanceof Book);
     }
 }
