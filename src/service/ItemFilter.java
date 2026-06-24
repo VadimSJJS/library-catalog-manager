@@ -2,7 +2,7 @@ package service;
 
 import model.Item;
 
-// Functional interface
-interface ItemFilter {
+// Функциональный интерфейс (стратегия)
+public interface ItemFilter {
     boolean test(Item item);
-}
+} 

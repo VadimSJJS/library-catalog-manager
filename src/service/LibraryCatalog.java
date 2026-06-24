@@ -16,6 +16,12 @@ public class LibraryCatalog {
     private long currentId = 1;
 
     public void addItem(Item item) {
+        if (item == null) {
+            throw new InvalidDataException("Нельзя добавить null в каталог");
+        }
+        if (storage.containsKey(item.getId())) {
+            throw new InvalidDataException(("Элемент с ID " + item.getId() + " уже существует"));
+        }
         item.setId(currentId++);
         storage.put(item.getId(), item);
     }
@@ -44,12 +50,20 @@ public class LibraryCatalog {
     */
 
     public List<Item> searchByTitleKeyword(String keyword) {
+        if (keyword == null || keyword.isEmpty()) {
+            throw new InvalidDataException("Заголовок не может быть пустым или null");
+        }
+
         return storage.values().stream()
             .filter(item -> item.getTitle().toLowerCase().contains(keyword.toLowerCase()))
             .toList();
     }
 
     public List<Book> searchBooksByAuthor(String author) {
+        if (author == null || author.isEmpty()) {
+            throw new InvalidDataException("Имя автора не может быть пустым или null");
+        }
+
         return storage.values().stream()
             .filter(item -> item instanceof Book)
             .map(item -> (Book)item)
@@ -58,6 +72,10 @@ public class LibraryCatalog {
     }
 
     public List<Item> findItemsPublishedAfter(int year) throws InvalidDataException {
+        if (year < 0) {
+            throw new InvalidDataException("Год не может быть отрицательным");
+        }
+
         return storage.values().stream()
             .filter(item -> item.getYearPublished() >= year)
             .toList();
@@ -76,5 +94,10 @@ public class LibraryCatalog {
         return storage.values().stream()
             .filter(filter::test)
             .collect(Collectors.toList());
+    }
+
+    public void clear() {
+        storage.clear();
+        currentId = 1;
     }
 }
