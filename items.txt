@@ -1,0 +1,3 @@
+BOOK|2|Book 2|123|Publisher 1|Author 1|23|isbn1
+MAGAZINE|3|Magazine 1|123|Publisher 1|1|frequency
+MAGAZINE|4|Magazine 2|123|Publisher 1|1|frequency

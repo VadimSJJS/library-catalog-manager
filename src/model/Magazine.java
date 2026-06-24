@@ -22,6 +22,22 @@ public class Magazine extends Item {
         return "Журнал: " + getTitle() + ", выпуск №" + issueNumber;
     }
 
+    public int getIssueNumber() {
+        return issueNumber;
+    }
+
+    public void setIssueNumber(int issueNumber) {
+        this.issueNumber = issueNumber;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
+
     @Override
     public String toString() {
         return "Magazine{" +

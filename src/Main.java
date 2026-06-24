@@ -1,9 +1,6 @@
-import exception.InvalidDataException;
-import exception.ItemNotFoundException;
 import model.Book;
 import model.Item;
 import model.Magazine;
-import service.ItemFilter;
 import service.LibraryCatalog;
 
 import java.util.List;
@@ -28,8 +25,6 @@ public class Main {
         items = libraryCatalog.getAllItems();
         System.out.println(items);
 
-        libraryCatalog.removeItem(1);
-        items = libraryCatalog.getAllItems();
-        System.out.println(items);
+        libraryCatalog.saveToFile("items.txt");
     }
 }
