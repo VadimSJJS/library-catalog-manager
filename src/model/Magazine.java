@@ -10,7 +10,7 @@ public class Magazine extends Item {
         super(title, yearPublished, publisher);
 
         if (issueNumber <= 0 ) {
-            throw new InvalidDataException("Номер выпуска не может быть <= 0");
+            throw new InvalidDataException("The issue number cannot be <= 0");
         }
 
         this.issueNumber = issueNumber;
@@ -19,7 +19,7 @@ public class Magazine extends Item {
 
     @Override
     public String getDescription() {
-        return "Журнал: " + getTitle() + ", выпуск №" + issueNumber;
+        return "Magazine: " + getTitle() + ", issue number №" + issueNumber;
     }
 
     public int getIssueNumber() {

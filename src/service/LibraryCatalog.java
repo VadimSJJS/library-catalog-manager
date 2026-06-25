@@ -14,15 +14,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LibraryCatalog {
-    private final Map<Long, Item> storage = new HashMap<>(); // {id:item}
+    private final Map<Long, Item> storage = new HashMap<>();
     private long currentId = 1;
 
     public void addItem(Item item) {
         if (item == null) {
-            throw new InvalidDataException("Нельзя добавить null в каталог");
+            throw new InvalidDataException("Cannot add null item to catalog");
         }
         if (storage.containsKey(item.getId())) {
-            throw new InvalidDataException(("Элемент с ID " + item.getId() + " уже существует"));
+            throw new InvalidDataException("Item with ID " + item.getId() + " already exists");
         }
         item.setId(currentId++);
         storage.put(item.getId(), item);
@@ -32,14 +32,14 @@ public class LibraryCatalog {
         Item item = storage.get(id);
 
         if (item == null) {
-            throw new ItemNotFoundException("Элемент с id " + id + " не найден");
+            throw new ItemNotFoundException("Item with ID " + id + " not found");
         }
 
         return item;
     }
 
     public void removeItem(long id) {
-        getItemById(id); // проверка на существование элемента
+        getItemById(id); // Check if item exists before removal
         storage.remove(id);
     }
 
@@ -66,10 +66,10 @@ public class LibraryCatalog {
                 bufferedWriter.write(line);
                 bufferedWriter.newLine();
             }
-            System.out.println("Каталог успешно сохранен в файл: " + fileName);
+            System.out.println("Catalog successfully saved to file: " + fileName);
         } catch (IOException ex) {
-            System.err.println("Ошибка при сохранении файла: " + ex.getMessage());
-            throw new RuntimeException("Не удалось сохранить файл", ex);
+            System.err.println("Error saving file: " + ex.getMessage());
+            throw new RuntimeException("Failed to save file", ex);
         }
     }
 
@@ -83,7 +83,7 @@ public class LibraryCatalog {
                 try {
                     String[] splitLine = line.split("\\|");
                     if (splitLine.length < 7) {
-                        System.err.println("Пропущена битая строка: " + line);
+                        System.err.println("Skipping malformed line: " + line);
                         continue;
                     }
 
@@ -110,7 +110,7 @@ public class LibraryCatalog {
                         item = new Magazine(magazineTitle, magazineYearPublished, magazinePublisher,
                                 magazineIssueNumber, magazineFrequency);
                     } else {
-                        System.err.println("Неизвестный тип объекта: " + splitLine[0]);
+                        System.err.println("Unknown object type: " + splitLine[0]);
                         continue;
                     }
 
@@ -118,73 +118,76 @@ public class LibraryCatalog {
                     storage.put(id, item);
 
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException ex) {
-                    System.err.println("Ошибка парсинга строки (пропущена): " + line);
-                    System.err.println("Причина: " + ex.getMessage());
+                    System.err.println("Error parsing line (skipped): " + line);
+                    System.err.println("Reason: " + ex.getMessage());
                 }
             }
 
             long maxId = storage.keySet().stream().max(Long::compareTo).orElse(0L);
             currentId = maxId + 1;
 
-            System.out.println("Загружено " + storage.size() + " элементов из файла: " + fileName);
+            System.out.println("Loaded " + storage.size() + " items from file: " + fileName);
 
         } catch (FileNotFoundException ex) {
-            System.out.println("Файл не найден. Будет создан новый каталог.");
+            System.out.println("File not found. A new catalog will be created.");
         } catch (IOException ex) {
-            System.err.println("Ошибка при чтении файла: " + ex.getMessage());
-            throw new RuntimeException("Не удалось загрузить файл", ex);
+            System.err.println("Error reading file: " + ex.getMessage());
+            throw new RuntimeException("Failed to load file", ex);
         }
     }
 
     /*
-    STREAM API
-    */
+     * STREAM API METHODS
+     */
 
     public List<Item> searchByTitleKeyword(String keyword) {
         if (keyword == null || keyword.isEmpty()) {
-            throw new InvalidDataException("Заголовок не может быть пустым или null");
+            throw new InvalidDataException("Keyword cannot be null or empty");
         }
 
         return storage.values().stream()
-            .filter(item -> item.getTitle().toLowerCase().contains(keyword.toLowerCase()))
-            .toList();
+                .filter(item -> item.getTitle().toLowerCase().contains(keyword.toLowerCase()))
+                .toList();
     }
 
     public List<Book> searchBooksByAuthor(String author) {
         if (author == null || author.isEmpty()) {
-            throw new InvalidDataException("Имя автора не может быть пустым или null");
+            throw new InvalidDataException("Author name cannot be null or empty");
         }
 
         return storage.values().stream()
-            .filter(item -> item instanceof Book)
-            .map(item -> (Book)item)
-            .filter(book -> book.getAuthor().equalsIgnoreCase(author))
-            .toList();
+                .filter(item -> item instanceof Book)
+                .map(item -> (Book) item)
+                .filter(book -> book.getAuthor().equalsIgnoreCase(author))
+                .toList();
     }
 
     public List<Item> findItemsPublishedAfter(int year) throws InvalidDataException {
         if (year < 0) {
-            throw new InvalidDataException("Год не может быть отрицательным");
+            throw new InvalidDataException("Year cannot be negative");
         }
 
         return storage.values().stream()
-            .filter(item -> item.getYearPublished() >= year)
-            .toList();
+                .filter(item -> item.getYearPublished() >= year)
+                .toList();
     }
 
-    // возращает кол-во объектов каждого типа
     public Map<String, Long> getTypeStatistics() {
         return storage.values().stream()
-            .collect(Collectors.groupingBy(
-                item -> item instanceof Book ? "Book" : "Magazine",
-                Collectors.counting()
-            ));
+                .collect(Collectors.groupingBy(
+                        item -> item instanceof Book ? "Book" : "Magazine",
+                        Collectors.counting()
+                ));
     }
 
     public List<Item> filterItems(ItemFilter filter) {
+        if (filter == null) {
+            throw new InvalidDataException("Filter cannot be null");
+        }
+
         return storage.values().stream()
-            .filter(filter::test)
-            .collect(Collectors.toList());
+                .filter(filter::test)
+                .collect(Collectors.toList());
     }
 
     public void clear() {

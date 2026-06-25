@@ -11,7 +11,7 @@ public class Book extends Item {
         super(title, yearPublished, publisher);
 
         if (pageCount <= 0) {
-            throw new InvalidDataException("Количество страниц должно быть больше 0");
+            throw new InvalidDataException("The number of pages must be greater than 0");
         }
 
         this.author = author;
@@ -21,7 +21,7 @@ public class Book extends Item {
 
     @Override
     public String getDescription() {
-        return "Книга: " + getTitle() + ", автор: " + author;
+        return "Book: " + getTitle() + ", author: " + author;
     }
 
     @Override

@@ -1,3 +1,3 @@
-BOOK|2|Book 2|123|Publisher 1|Author 1|23|isbn1
-MAGAZINE|3|Magazine 1|123|Publisher 1|1|frequency
-MAGAZINE|4|Magazine 2|123|Publisher 1|1|frequency
+MAGAZINE|2|MagazineName1|2017|MagazinePublisher1|31|Weekly
+BOOK|3|NameBook1|2003|PublisherBook1|AuthorbOOK1|123|ISBNBOOK2
+BOOK|4|aslkdj|31|1|2|3|4

@@ -15,7 +15,7 @@ public abstract class Item {
 
     public Item(String title, int yearPublished, String publisher) {
         if (yearPublished < 0 || yearPublished > LocalDateTime.now().getYear()) {
-            throw new InvalidDataException("Год издания не может быть < 0 или быть больше текущего года");
+            throw new InvalidDataException("The publication year cannot be less than 0 or greater than the current year.");
         }
 
         this.title = title;
