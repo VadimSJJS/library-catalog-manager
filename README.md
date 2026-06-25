@@ -1,4 +1,4 @@
-<img width="300" height="79" alt="image" src="https://github.com/user-attachments/assets/55e06242-ff53-4f79-aaad-660dc343a358" /><img width="387" height="393" alt="image" src="https://github.com/user-attachments/assets/847672cb-ab9b-4ede-90e1-88cb9d5bb693" /># 📚 Library Catalog Manager
+📚 Library Catalog Manager
 
 Console-based application for managing a library catalog with search and data persistence.
 
