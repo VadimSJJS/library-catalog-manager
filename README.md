@@ -4,11 +4,21 @@ Console-based application for managing a library catalog with search and data pe
 
 ---
 
-## 🛠️ Tech Stack
+## 📖 About The Project
 
-- **Java 17**
-- **Maven**
-- **JUnit 5**
+This project is a practical implementation of core Java concepts, demonstrating:
+- **Object-Oriented Programming** (OOP)
+- **Java Collections Framework** (Map, List)
+- **Exception Handling** (custom exceptions, try-with-resources)
+- **Java 8+ Features** (Stream API, Lambda expressions)
+- **File I/O** (save/load catalog to/from text files)
+- **Unit Testing** (JUnit 5)
+
+The application provides an interactive console menu that allows users to:
+- Add, view, and remove books and magazines
+- Search for items by title, author, or publication year
+- View aggregated statistics
+- Save and load catalog data to/from files
 
 ---
 
